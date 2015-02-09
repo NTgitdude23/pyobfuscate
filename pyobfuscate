@@ -19,6 +19,7 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 import sys
+import datetime
 import types
 import symbol
 import token
@@ -29,6 +30,7 @@ import parser
 import random
 import symtable
 import StringIO
+import string
 import getopt
 import re
 
@@ -70,18 +72,10 @@ class NameTranslator:
         
 
     def gen_name():
-        if random.choice((True, False)):
-            # Type ilII1ili1Ilil1il1Ilili1
-            chars = ("i", "I", "1")
-        else:
-            # Type oooOo0oOo00oOO0o0O0
-            chars = ("o", "O", "0")
-
+        length = random.randrange(5,20)
+        chars = ''.join(random.choice(string.ascii_letters) for x in range(length))
         # Name must'nt begin with a number
-        result = random.choice(chars[:2])
-        for x in range(random.randint(1, 12)):
-            result += random.choice(chars)
-        return result
+        return chars
     gen_name = staticmethod(gen_name)
         
     
@@ -1107,9 +1101,11 @@ class Configuration:
             usage()
             sys.exit(2)
 
+        d = datetime.datetime.now()
+
         self.file = args[0]
         self.indent = 1
-        self.seed = 42
+        self.seed = d.microsecond + d.second + d.day + d.month + d.year
         self.blanks = self.OBFUSCATE_BLANKS
         self.firstcomment = False
         self.allpublic = False
