@@ -1,11 +1,3 @@
-
-* Write testcases!
-
-
-* The documentation for the --seed argument says default is to use
-  system time, but in reality, a fixed number is used. 
-
-
 * Obfuscate strings, by using \x sequences. 
 
 
